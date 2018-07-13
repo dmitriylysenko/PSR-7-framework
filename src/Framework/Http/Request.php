@@ -38,8 +38,9 @@ class Request
    */
   public function withQueryParams(array $query)
   {
-    $this->queryParams = $query;
-    return $this;
+    $new = clone $this;
+    $new->queryParams = $query;
+    return $new;
   }
 
   /**
@@ -56,7 +57,8 @@ class Request
    */
   public function withParsedBody($data)
   {
-    $this->parsedBody = $data;
-    return $this;
+    $new = clone $this;
+    $new->parsedBody = $data;
+    return $new;
   }
 }
