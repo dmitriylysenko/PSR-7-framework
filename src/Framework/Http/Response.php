@@ -9,7 +9,10 @@
 namespace Framework\Http;
 
 
-class Response
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+
+class Response implements ResponseInterface
 {
 
   private $headers = [];
@@ -40,7 +43,7 @@ class Response
   /**
    * @return mixed
    */
-  public function getBody()
+  public function getBody(): StreamInterface
   {
     return $this->body;
   }
@@ -49,7 +52,7 @@ class Response
    * @param $body
    * @return Response
    */
-  public function withBody($body): self
+  public function withBody(StreamInterface $body): self
   {
     $new       = clone $this;
     $new->body = $body;
