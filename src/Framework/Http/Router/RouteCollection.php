@@ -14,6 +14,25 @@ class RouteCollection
   private $routes = [];
 
   /**
+   * @param Route $route
+   */
+  public function addRoute(Route $route): void
+  {
+    $this->routes[] = $route;
+  }
+
+  /**
+   * @param $name
+   * @param $pattern
+   * @param $handler
+   * @param array $methods
+   * @param array $tokens
+   */
+  public function add($name, $pattern, $handler,array $methods, array $tokens = []): void
+  {
+    $this->addRoute(new Route($name, $pattern, $handler, $methods, $tokens));
+  }
+  /**
    * @param $name
    * @param $pattern
    * @param $handler
@@ -21,7 +40,7 @@ class RouteCollection
    */
   public function any($name, $pattern, $handler, array $tokens = []): void
   {
-    $this->routes[] = new Route($name, $pattern, $handler, [], $tokens);
+    $this->addRoute(new Route($name, $pattern, $handler, [], $tokens));
   }
 
   /**
@@ -32,7 +51,7 @@ class RouteCollection
    */
   public function get($name, $pattern, $handler, array $tokens = []): void
   {
-    $this->routes[] = new Route($name, $pattern, $handler, ['GET'], $tokens);
+    $this->addRoute(new Route($name, $pattern, $handler, ['GET'], $tokens));
   }
 
   /**
@@ -43,7 +62,7 @@ class RouteCollection
    */
   public function post($name, $pattern, $handler, array $tokens = []): void
   {
-    $this->routes[] = new Route($name, $pattern, $handler, ['POST'], $tokens);
+    $this->addRoute(new Route($name, $pattern, $handler, ['POST'], $tokens));
   }
 
   /**
