@@ -30,7 +30,7 @@ class Router
   public function match(ServerRequestInterface $request): Result
   {
     foreach ($this->routes->getRoutes() as $route) {
-      /** @var Route $route */
+      /** @var RegexpRoute $route */
       if ($result = $route->match($request)) {
         return $result;
       }
@@ -41,7 +41,7 @@ class Router
   public function generate($name, array $params = []): string
   {
     foreach ($this->routes->getRoutes() as $route) {
-      /** @var Route $route */
+      /** @var RegexpRoute $route */
       if (null !== $url = $route->generate($name, array_filter($params))) {
         return $url;
       }
