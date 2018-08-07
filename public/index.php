@@ -18,12 +18,13 @@ require 'vendor/autoload.php';
 
 $routes = new RouteCollection();
 
-$routes->get('home', '/', new HelloAction());
-$routes->get('about', '/about', new AboutAction());
-$routes->get('blog', '/blog', new IndexAction());
-$routes->get('blog_show', '/blog/{id}', new ShowAction(), ['id' => '\d+']);
+$routes->get('home', '/', HelloAction::class);
+$routes->get('about', '/about', AboutAction::class);
+$routes->get('blog', '/blog', IndexAction::class);
+$routes->get('blog_show', '/blog/{id}', ShowAction::class, ['id' => '\d+']);
 
-$router = new Router($routes);
+$router   = new Router($routes);
+$resolver = new \Framework\Http\ActionResolver();
 
 ### Running
 
@@ -33,8 +34,7 @@ try {
   foreach ($result->getAttributes() as $attribute => $value) {
     $request = $request->withAttribute($attribute, $value);
   }
-  /** @var callable $action */
-  $action   = $result->getHandler();
+  $action   = $resolver->resolve($result->getHandler());
   $response = $action($request);
 } catch (RequestNotMatchedException $e) {
   $response = new JsonResponse(['error' => 'Undefined page'], 404);
