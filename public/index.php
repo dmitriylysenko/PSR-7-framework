@@ -7,7 +7,7 @@ use App\Http\Action\HelloAction;
 use Aura\Router\RouterContainer;
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Router\Exception\RequestNotMatchedException;
-use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
 
@@ -38,7 +38,7 @@ try {
   $action   = $resolver->resolve($result->getHandler());
   $response = $action($request);
 } catch (RequestNotMatchedException $e) {
-  $response = new JsonResponse(['error' => 'Undefined page'], 404);
+  $response = new HtmlResponse('Undefined page', 404);
 }
 
 ###Postprocessing
