@@ -16,11 +16,22 @@ require 'vendor/autoload.php';
 
 ### Initialization
 
+$params = [
+  'users' => [
+    'admin' => 'password'
+  ]
+];
+
 $aura   = new RouterContainer();
 $routes = $aura->getMap();
 
 $routes->get('home', '/', HelloAction::class);
 $routes->get('about', '/about', AboutAction::class);
+
+$routes->get('cabinet', '/cabinet', new \App\Http\Action\BasicAuthActionDecorator(
+  new \App\Http\Action\CabinetAction(),
+  $params['users']
+));
 $routes->get('blog', '/blog', IndexAction::class);
 $routes->get('blog_show', '/blog/{id}', ShowAction::class)->tokens(['id' => '\d+']);
 
